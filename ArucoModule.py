@@ -5,9 +5,6 @@ import os
 
 
 
-
-
-
 def findArucoMarkers(img, draw=True):
         # change current image to gray scale for detection
         imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
