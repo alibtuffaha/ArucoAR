@@ -5,14 +5,6 @@ import os
 
 
 
-def loadAugImages(path):
-        myList = os.listdir(path)
-        augDics = {}
-        for imgPath in myList:
-                key = int(os.path.splitext(imgPath)[0])
-                imgAug = cv2.imread(f'{path}/{imgPath}')
-                augDics[key] = imgAug
-        return augDics
 
 
 
@@ -44,13 +36,12 @@ def findArucoMarkers(img, draw=True):
 
 def main():
         camera = cv2.VideoCapture(0)
-        augDics = loadAugImages("Markers")
 
         while True:
             _, img = camera.read()
             arucoFound = findArucoMarkers(img)
 
-
+        
             cv2.imshow("Image", img)
             cv2.waitKey(1)
 
