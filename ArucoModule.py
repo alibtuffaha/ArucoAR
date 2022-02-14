@@ -39,30 +39,6 @@ def findArucoMarkers(img, draw=True):
         return [boundingBoxes, ids]
 
 
-def augmentAruco(bbox, img, imgAug):
-        
-        # get four corner points of bounding box
-        tl = bbox[0][0][0], bbox[0][0][1]
-        tr = bbox[0][1][0], bbox[0][1][1]
-        br = bbox[0][2][0], bbox[0][2][1]
-        bl = bbox[0][3][0], bbox[0][3][1]
-
-        # get size of image to augment
-        h, w, c = imgAug.shape
-
-        # warping image process
-        pts1 = np.array([tl, tr, br, bl])
-        pts2 = np.float32([[0, 0], [w, 0], [w, h], [0, h]])
-        matrix, _ = cv2.findHomography(pts2, pts1)
-        imgOut = cv2.warpPerspective(imgAug, matrix, (img.shape[1], img.shape[0]))
-        
-        # replacing aruco marker with black box
-        cv2.fillConvexPoly(img, pts1.astype(int), (0, 0, 0))
-        
-        # adding both images
-        imgOut = img + imgOut
-
-        return imgOut
 
 
 
@@ -73,16 +49,6 @@ def main():
         while True:
             _, img = camera.read()
             arucoFound = findArucoMarkers(img)
-
-            
-            # loop through all the markers and augment each one
-            if len(arucoFound[0])!=0:
-                    # loop through boundingBox and id at the same time
-                    for boundingBox, id in zip(arucoFound[0], arucoFound[1]):
-                            
-                            # if id exist in Markers, augment image
-                            if int(id) in augDics.keys():
-                                img = augmentAruco(boundingBox, img, augDics[int(id)])
 
 
             cv2.imshow("Image", img)
