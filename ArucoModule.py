@@ -54,13 +54,13 @@ def augmentAruco(bbox, img, imgAug):
         pts1 = np.array([tl, tr, br, bl])
         pts2 = np.float32([[0, 0], [w, 0], [w, h], [0, h]])
         matrix, _ = cv2.findHomography(pts2, pts1)
-        imgOut = cv2.warpPerspective(imgAug, matrix, (img.shape[1], img.shape[0]))
+        imgWarped = cv2.warpPerspective(imgAug, matrix, (img.shape[1], img.shape[0]))
         
         # replacing aruco marker with black box
         cv2.fillConvexPoly(img, pts1.astype(int), (0, 0, 0))
         
         # adding both images
-        imgOut = img + imgOut
+        imgOut = img + imgWarped
 
         return imgOut
 
