@@ -80,6 +80,7 @@ def main():
                     # loop through boundingBox and id at the same time
                     for boundingBox, id in zip(arucoFound[0], arucoFound[1]):
                             
+                            # if id exist in Markers, augment image
                             if int(id) in augDics.keys():
                                 img = augmentAruco(boundingBox, img, augDics[int(id)])
 
