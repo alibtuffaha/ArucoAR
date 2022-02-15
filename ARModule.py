@@ -59,10 +59,8 @@ def augmentAruco(bbox, img, imgAug):
         # replacing aruco marker with black box
         cv2.fillConvexPoly(img, pts1.astype(int), (0, 0, 0))
         
-        # adding both images
-        imgOut = img + imgWarped
 
-        return imgOut
+        return img
 
 
 
